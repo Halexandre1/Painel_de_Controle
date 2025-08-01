@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class=""> <!-- A classe 'dark' será adicionada aqui -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyHub - Painel de Controle CRC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Habilita o modo escuro
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': {
+                            50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd',
+                            300: '#7dd3fc', 400: '#38bdf8', 500: '#0ea5e9',
+                            600: '#0284c7', 700: '#0369a1', 800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            transition: background 0.4s ease;
+        }
+        
+        html.dark body {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+        }
+        
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .floating-action {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 40;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .floating-action:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+        }
+        
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 50;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            color: white;
+            font-weight: 500;
+            transform: translateX(120%);
+            transition: transform 0.4s ease-in-out;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .notification.error {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900">
+    <!-- Navbar -->
+    <nav class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg sticky top-0 z-30 border-b border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">S</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800 dark:text-white">StudyHub</h1>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Painel CRC Profissional</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </div>
+                        <input type="text" id="searchInput" placeholder="Buscar projetos..." class="pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 border border-transparent rounded-lg text-gray-800 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500 w-64">
+                    </div>
+                    <button id="themeToggle" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center transition-transform hover:scale-110">🌙</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-6 py-8">
+        <!-- Header Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md border border-gray-200 dark:border-gray-700"><div class="flex items-center justify-between"><div><p class="text-gray-500 dark:text-gray-400 text-sm font-medium">Total de Projetos</p><p id="totalProjects" class="text-3xl font-bold text-gray-800 dark:text-white">0</p></div><div class="w-12 h-12 bg-brand-100 dark:bg-brand-900/50 rounded-lg flex items-center justify-center text-brand-600 dark:text-brand-300"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div></div></div>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md border border-gray-200 dark:border-gray-700"><div class="flex items-center justify-between"><div><p class="text-gray-500 dark:text-gray-400 text-sm font-medium">Concluídos</p><p id="completedProjects" class="text-3xl font-bold text-gray-800 dark:text-white">0</p></div><div class="w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center text-green-600 dark:text-green-300"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div></div></div>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md border border-gray-200 dark:border-gray-700"><div class="flex items-center justify-between"><div><p class="text-gray-500 dark:text-gray-400 text-sm font-medium">Em Andamento</p><p id="activeProjects" class="text-3xl font-bold text-gray-800 dark:text-white">0</p></div><div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/50 rounded-lg flex items-center justify-center text-yellow-600 dark:text-yellow-300"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div></div></div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div id="filterContainer" class="flex flex-wrap gap-2 mb-8">
+            <button class="filter-btn active px-6 py-2 rounded-full font-medium transition-all" data-filter="all">Todos</button>
+            <button class="filter-btn px-6 py-2 rounded-full font-medium transition-all" data-filter="active">Em Andamento</button>
+            <button class="filter-btn px-6 py-2 rounded-full font-medium transition-all" data-filter="completed">Concluídos</button>
+        </div>
+
+        <!-- Projects Grid -->
+        <div id="dashboardGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"></div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="text-center py-16 hidden"><div class="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6"><svg class="w-12 h-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div><h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Nenhum projeto encontrado</h3><p class="text-gray-500 dark:text-gray-400 mb-6">Comece criando seu primeiro projeto de estudo</p><button id="emptyStateBtn" class="bg-brand-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-brand-700 transition-colors">Criar Primeiro Projeto</button></div>
+        
+        <footer id="signature" class="text-center mt-8 text-gray-500 dark:text-gray-400 text-sm"></footer>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button id="addProjectBtn" class="floating-action w-16 h-16 rounded-full text-white shadow-lg flex items-center justify-center"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg></button>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 modal-backdrop flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 w-full max-w-2xl animate-fade-in">
+            <div class="flex items-center justify-between mb-8"><h2 id="modalTitle" class="text-3xl font-bold text-gray-800 dark:text-white">Novo Projeto</h2><button id="closeModalBtn" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"><svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></div>
+            <form id="projectForm" class="space-y-6"><input type="hidden" id="projectId"><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label for="projectTitle" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Título do Projeto</label><input type="text" id="projectTitle" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all" required></div><div><label for="projectCategory" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Categoria</label><select id="projectCategory" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"><option value="estudo">📚 Estudo</option><option value="jogo">🎮 Jogo</option><option value="simulado">📝 Simulado</option><option value="revisao">🔄 Revisão</option><option value="variedades">🧩 Variedades</option></select></div></div><div><label for="projectDescription" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Descrição</label><textarea id="projectDescription" rows="4" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all" required></textarea></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label for="projectLink" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Link (URL)</label><input type="url" id="projectLink" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all" required placeholder="https://..."></div><div><label for="projectStatus" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Status</label><select id="projectStatus" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"><option value="active">🔄 Em Andamento</option><option value="completed">✅ Concluído</option></select></div></div><div class="flex justify-end gap-4 pt-6"><button type="button" id="cancelBtn" class="px-8 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Cancelar</button><button type="submit" class="px-8 py-3 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-xl hover:from-brand-600 hover:to-brand-800 transition-all">Salvar Projeto</button></div></form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, addDoc, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // --- Configuração do Firebase ---
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // --- Variáveis Globais ---
+        const elements = {
+            addProjectBtn: document.getElementById('addProjectBtn'), emptyStateBtn: document.getElementById('emptyStateBtn'),
+            modal: document.getElementById('modal'), modalTitle: document.getElementById('modalTitle'),
+            closeModalBtn: document.getElementById('closeModalBtn'), cancelBtn: document.getElementById('cancelBtn'),
+            projectForm: document.getElementById('projectForm'), dashboardGrid: document.getElementById('dashboardGrid'),
+            emptyState: document.getElementById('emptyState'), searchInput: document.getElementById('searchInput'),
+            totalProjects: document.getElementById('totalProjects'), completedProjects: document.getElementById('completedProjects'),
+            activeProjects: document.getElementById('activeProjects'), filterContainer: document.getElementById('filterContainer'),
+            themeToggle: document.getElementById('themeToggle'), signature: document.getElementById('signature')
+        };
+        const htmlEl = document.documentElement;
+        const formInputs = {
+            id: document.getElementById('projectId'), title: document.getElementById('projectTitle'),
+            description: document.getElementById('projectDescription'), link: document.getElementById('projectLink'),
+            category: document.getElementById('projectCategory'), status: document.getElementById('projectStatus')
+        };
+
+        let projects = [];
+        let currentFilter = 'all';
+        let searchTerm = '';
+        let userId = null;
+        let projectsCollectionRef;
+
+        // --- Funções Utilitárias ---
+        function showNotification(message, type = 'success') { /* ... (código inalterado) ... */ }
+        const categoryConfig = { /* ... (código inalterado) ... */ };
+        const statusConfig = { /* ... (código inalterado) ... */ };
+
+        // --- Funções de Renderização ---
+        function updateStats() { /* ... (código inalterado) ... */ }
+        function renderProjects() { /* ... (código inalterado, mas agora usa 'projects' que vem do Firestore) ... */ }
+
+        // --- Gerenciamento do Modal ---
+        function openModal(project = null) { /* ... (código inalterado) ... */ }
+        function closeModal() { /* ... (código inalterado) ... */ }
+
+        // --- Lógica do Firebase (CRUD) ---
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            if (!userId) {
+                showNotification('Erro: Utilizador não autenticado.', 'error');
+                return;
+            }
+
+            const id = formInputs.id.value;
+            const projectData = {
+                title: formInputs.title.value.trim(),
+                description: formInputs.description.value.trim(),
+                link: formInputs.link.value.trim(),
+                category: formInputs.category.value,
+                status: formInputs.status.value,
+            };
+
+            try {
+                if (id) { // Editar
+                    const projectDocRef = doc(db, `artifacts/${appId}/users/${userId}/projects`, id);
+                    await updateDoc(projectDocRef, projectData);
+                    showNotification('Projeto atualizado com sucesso!');
+                } else { // Novo
+                    projectData.createdAt = serverTimestamp(); // Usa o timestamp do servidor
+                    await addDoc(projectsCollectionRef, projectData);
+                    showNotification('Projeto criado com sucesso!');
+                }
+                closeModal();
+            } catch (error) {
+                console.error("Erro ao salvar projeto: ", error);
+                showNotification('Erro ao salvar o projeto.', 'error');
+            }
+        }
+
+        async function deleteProject(id) {
+            if (!userId) return;
+            if (confirm('Tem a certeza que quer excluir este projeto?')) {
+                try {
+                    const projectDocRef = doc(db, `artifacts/${appId}/users/${userId}/projects`, id);
+                    await deleteDoc(projectDocRef);
+                    showNotification('Projeto excluído.', 'success');
+                } catch (error) {
+                    console.error("Erro ao excluir projeto: ", error);
+                    showNotification('Erro ao excluir o projeto.', 'error');
+                }
+            }
+        }
+        
+        function setupRealtimeListener(uid) {
+            userId = uid;
+            projectsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/projects`);
+            const q = query(projectsCollectionRef, orderBy('createdAt', 'desc'));
+
+            onSnapshot(q, (snapshot) => {
+                projects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderProjects();
+            }, (error) => {
+                console.error("Erro ao carregar projetos: ", error);
+                showNotification('Não foi possível carregar os projetos.', 'error');
+            });
+        }
+
+        // --- Event Listeners ---
+        function handleDashboardClick(e) {
+            const editBtn = e.target.closest('.edit-btn');
+            const deleteBtn = e.target.closest('.delete-btn');
+            if (editBtn) {
+                const project = projects.find(p => p.id == editBtn.dataset.id);
+                openModal(project);
+            }
+            if (deleteBtn) {
+                deleteProject(deleteBtn.dataset.id);
+            }
+        }
+        
+        function handleFilterClick(e) { /* ... (código inalterado) ... */ }
+        
+        // --- Tema e Assinatura ---
+        function loadTheme() { /* ... (código inalterado) ... */ }
+        function setSignature() { /* ... (código inalterado) ... */ }
+        
+        // --- Inicialização ---
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // Utilizador está logado
+                console.log("Utilizador autenticado com UID:", user.uid);
+                setupRealtimeListener(user.uid);
+            } else {
+                // Utilizador não está logado, tenta autenticar
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (error) {
+                    console.error("Falha na autenticação anónima:", error);
+                    showNotification('Não foi possível conectar à base de dados.', 'error');
+                }
+            }
+        });
+
+        [elements.addProjectBtn, elements.emptyStateBtn].forEach(btn => btn.addEventListener('click', () => openModal()));
+        [elements.closeModalBtn, elements.cancelBtn].forEach(btn => btn.addEventListener('click', closeModal));
+        elements.modal.addEventListener('click', (e) => { if (e.target === elements.modal) closeModal(); });
+        elements.projectForm.addEventListener('submit', handleFormSubmit);
+        elements.dashboardGrid.addEventListener('click', handleDashboardClick);
+        elements.filterContainer.addEventListener('click', handleFilterClick);
+        elements.searchInput.addEventListener('input', (e) => {
+            searchTerm = e.target.value.toLowerCase();
+            renderProjects();
+        });
+        elements.themeToggle.addEventListener('click', () => {
+            htmlEl.classList.toggle('dark');
+            localStorage.setItem('theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
+            elements.themeToggle.innerHTML = htmlEl.classList.contains('dark') ? '☀️' : '🌙';
+        });
+
+        // Funções que precisam ser globais para o HTML
+        window.showNotification = showNotification;
+        window.categoryConfig = categoryConfig;
+        window.statusConfig = statusConfig;
+        window.updateStats = updateStats;
+        window.renderProjects = renderProjects;
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        window.handleFormSubmit = handleFormSubmit;
+        window.handleDashboardClick = handleDashboardClick;
+        window.handleFilterClick = handleFilterClick;
+        
+        // Inicializa o tema e a assinatura
+        loadTheme();
+        setSignature();
+    </script>
+</body>
+</html>
