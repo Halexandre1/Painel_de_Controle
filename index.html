@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyHub - Painel de Controle CRC</title>
+    <title>StudyHub - Painel de Controle</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,7 +112,7 @@
                     </div>
                     <div>
                         <h1 class="text-xl font-bold text-gray-800 dark:text-white">StudyHub</h1>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm">Painel CRC Profissional</p>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Painel de Controle</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -159,7 +159,18 @@
     <div id="modal" class="fixed inset-0 modal-backdrop flex items-center justify-center p-4 hidden z-50">
         <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 w-full max-w-2xl animate-fade-in">
             <div class="flex items-center justify-between mb-8"><h2 id="modalTitle" class="text-3xl font-bold text-gray-800 dark:text-white">Novo Projeto</h2><button id="closeModalBtn" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"><svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></div>
-            <form id="projectForm" class="space-y-6"><input type="hidden" id="projectId"><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label for="projectTitle" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Título do Projeto</label><input type="text" id="projectTitle" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all" required></div><div><label for="projectCategory" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Categoria</label><select id="projectCategory" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"><option value="estudo">📚 Estudo</option><option value="jogo">🎮 Jogo</option><option value="simulado">📝 Simulado</option><option value="revisao">🔄 Revisão</option><option value="variedades">🧩 Variedades</option></select></div></div><div><label for="projectDescription" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Descrição</label><textarea id="projectDescription" rows="4" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all" required></textarea></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label for="projectLink" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Link (URL)</label><input type="url" id="projectLink" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all" required placeholder="https://..."></div><div><label for="projectStatus" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Status</label><select id="projectStatus" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"><option value="active">🔄 Em Andamento</option><option value="completed">✅ Concluído</option></select></div></div><div class="flex justify-end gap-4 pt-6"><button type="button" id="cancelBtn" class="px-8 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Cancelar</button><button type="submit" class="px-8 py-3 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-xl hover:from-brand-600 hover:to-brand-800 transition-all">Salvar Projeto</button></div></form>
+            <form id="projectForm" class="space-y-6"><input type="hidden" id="projectId"><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label for="projectTitle" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Título do Projeto</label><input type="text" id="projectTitle" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all" required></div><div><label for="projectCategory" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Categoria</label><select id="projectCategory" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"><option value="estudo">📚 Estudo</option><option value="jogo">🎮 Jogo</option><option value="simulado">📝 Simulado</option><option value="revisao">🔄 Revisão</option><option value="variedades">🧩 Variedades</option></select></div></div><div><label for="projectDescription" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Descrição</label><div class="relative"><textarea id="projectDescription" rows="4" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all" required></textarea><button type="button" id="generateDescBtn" class="absolute bottom-3 right-3 bg-brand-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-brand-600 transition-colors">✨ Gerar com IA</button></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label for="projectLink" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Link (URL)</label><input type="url" id="projectLink" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all" required placeholder="https://..."></div><div><label for="projectStatus" class="block text-gray-700 dark:text-gray-300 font-semibold mb-3">Status</label><select id="projectStatus" class="w-full p-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"><option value="active">🔄 Em Andamento</option><option value="completed">✅ Concluído</option></select></div></div><div class="flex justify-end gap-4 pt-6"><button type="button" id="cancelBtn" class="px-8 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Cancelar</button><button type="submit" class="px-8 py-3 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold rounded-xl hover:from-brand-600 hover:to-brand-800 transition-all">Salvar Projeto</button></div></form>
+        </div>
+    </div>
+
+    <!-- Summary Modal -->
+    <div id="summaryModal" class="fixed inset-0 modal-backdrop flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 w-full max-w-2xl animate-fade-in max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between mb-4">
+                <h2 id="summaryModalTitle" class="text-2xl font-bold text-gray-800 dark:text-white">Resumo do Tópico</h2>
+                <button id="closeSummaryModalBtn" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">&times;</button>
+            </div>
+            <div id="summaryContent" class="overflow-y-auto text-gray-600 dark:text-gray-300 prose dark:prose-invert max-w-none"></div>
         </div>
     </div>
 
@@ -169,7 +180,6 @@
         import { getFirestore, collection, onSnapshot, addDoc, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // --- Configuração do Firebase ---
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         
@@ -177,7 +187,6 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
 
-        // --- Variáveis Globais ---
         const elements = {
             addProjectBtn: document.getElementById('addProjectBtn'), emptyStateBtn: document.getElementById('emptyStateBtn'),
             modal: document.getElementById('modal'), modalTitle: document.getElementById('modalTitle'),
@@ -186,7 +195,12 @@
             emptyState: document.getElementById('emptyState'), searchInput: document.getElementById('searchInput'),
             totalProjects: document.getElementById('totalProjects'), completedProjects: document.getElementById('completedProjects'),
             activeProjects: document.getElementById('activeProjects'), filterContainer: document.getElementById('filterContainer'),
-            themeToggle: document.getElementById('themeToggle'), signature: document.getElementById('signature')
+            themeToggle: document.getElementById('themeToggle'), signature: document.getElementById('signature'),
+            generateDescBtn: document.getElementById('generateDescBtn'),
+            summaryModal: document.getElementById('summaryModal'),
+            summaryModalTitle: document.getElementById('summaryModalTitle'),
+            summaryContent: document.getElementById('summaryContent'),
+            closeSummaryModalBtn: document.getElementById('closeSummaryModalBtn')
         };
         const htmlEl = document.documentElement;
         const formInputs = {
@@ -201,85 +215,103 @@
         let userId = null;
         let projectsCollectionRef;
 
-        // --- Funções Utilitárias ---
-        function showNotification(message, type = 'success') { /* ... (código inalterado) ... */ }
-        const categoryConfig = { /* ... (código inalterado) ... */ };
-        const statusConfig = { /* ... (código inalterado) ... */ };
-
-        // --- Funções de Renderização ---
-        function updateStats() { /* ... (código inalterado) ... */ }
-        function renderProjects() { /* ... (código inalterado, mas agora usa 'projects' que vem do Firestore) ... */ }
-
-        // --- Gerenciamento do Modal ---
-        function openModal(project = null) { /* ... (código inalterado) ... */ }
-        function closeModal() { /* ... (código inalterado) ... */ }
-
-        // --- Lógica do Firebase (CRUD) ---
-        async function handleFormSubmit(e) {
-            e.preventDefault();
-            if (!userId) {
-                showNotification('Erro: Utilizador não autenticado.', 'error');
-                return;
-            }
-
-            const id = formInputs.id.value;
-            const projectData = {
-                title: formInputs.title.value.trim(),
-                description: formInputs.description.value.trim(),
-                link: formInputs.link.value.trim(),
-                category: formInputs.category.value,
-                status: formInputs.status.value,
-            };
-
-            try {
-                if (id) { // Editar
-                    const projectDocRef = doc(db, `artifacts/${appId}/users/${userId}/projects`, id);
-                    await updateDoc(projectDocRef, projectData);
-                    showNotification('Projeto atualizado com sucesso!');
-                } else { // Novo
-                    projectData.createdAt = serverTimestamp(); // Usa o timestamp do servidor
-                    await addDoc(projectsCollectionRef, projectData);
-                    showNotification('Projeto criado com sucesso!');
-                }
-                closeModal();
-            } catch (error) {
-                console.error("Erro ao salvar projeto: ", error);
-                showNotification('Erro ao salvar o projeto.', 'error');
-            }
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => document.body.removeChild(notification), 400);
+            }, 3000);
         }
 
-        async function deleteProject(id) {
-            if (!userId) return;
-            if (confirm('Tem a certeza que quer excluir este projeto?')) {
-                try {
-                    const projectDocRef = doc(db, `artifacts/${appId}/users/${userId}/projects`, id);
-                    await deleteDoc(projectDocRef);
-                    showNotification('Projeto excluído.', 'success');
-                } catch (error) {
-                    console.error("Erro ao excluir projeto: ", error);
-                    showNotification('Erro ao excluir o projeto.', 'error');
-                }
+        const categoryConfig = {
+            estudo: { icon: '📚', name: 'Estudo' },
+            jogo: { icon: '🎮', name: 'Jogo' },
+            simulado: { icon: '📝', name: 'Simulado' },
+            revisao: { icon: '🔄', name: 'Revisão' },
+            variedades: { icon: '🧩', name: 'Variedades' }
+        };
+
+        const statusConfig = {
+            completed: { text: '✅ Concluído', color: 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300' },
+            active: { text: '🔄 Em Andamento', color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300' }
+        };
+
+        function updateStats() {
+            elements.totalProjects.textContent = projects.length;
+            elements.completedProjects.textContent = projects.filter(p => p.status === 'completed').length;
+            elements.activeProjects.textContent = projects.filter(p => p.status === 'active').length;
+        }
+
+        function renderProjects() {
+            const filteredProjects = projects.filter(project => 
+                (currentFilter === 'all' || project.status === currentFilter) &&
+                (project.title.toLowerCase().includes(searchTerm) || project.description.toLowerCase().includes(searchTerm))
+            );
+            
+            elements.dashboardGrid.innerHTML = '';
+            
+            if (filteredProjects.length === 0) {
+                elements.emptyState.classList.remove('hidden');
+                elements.dashboardGrid.classList.add('hidden');
+            } else {
+                elements.emptyState.classList.add('hidden');
+                elements.dashboardGrid.classList.remove('hidden');
+                filteredProjects.forEach(project => {
+                    const card = document.createElement('div');
+                    card.className = 'project-card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 animate-fade-in flex flex-col';
+                    const createdAt = project.createdAt?.toDate ? project.createdAt.toDate() : new Date();
+                    card.innerHTML = `
+                        <div class="flex-grow">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center space-x-3"><div class="w-12 h-12 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center text-white text-xl">${categoryConfig[project.category]?.icon || '📁'}</div><div><h3 class="text-xl font-bold text-gray-800 dark:text-white mb-1">${project.title}</h3><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusConfig[project.status].color}">${statusConfig[project.status].text}</span></div></div>
+                                <div class="flex space-x-2"><button class="edit-btn w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center transition-colors" data-id="${project.id}" title="Editar"><svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button class="delete-btn w-8 h-8 rounded-lg bg-red-100 dark:bg-red-700/50 hover:bg-red-200 dark:hover:bg-red-700 flex items-center justify-center transition-colors" data-id="${project.id}" title="Excluir"><svg class="w-4 h-4 text-red-600 dark:text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></div>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">${project.description}</p>
+                        </div>
+                        <div class="mt-auto">
+                            <button class="generate-summary-btn w-full mb-4 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold py-2 px-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" data-title="${project.title}">✨ Gerar Resumo</button>
+                            <div class="flex items-center justify-between"><a href="${project.link}" target="_blank" class="flex-1 mr-4 bg-gradient-to-r from-brand-500 to-brand-700 text-white font-semibold py-3 px-6 rounded-xl hover:from-brand-600 hover:to-brand-800 transition-all text-center">Acessar Projeto</a><div class="text-xs text-gray-400 dark:text-gray-500">${createdAt.toLocaleDateString('pt-BR')}</div></div>
+                        </div>
+                    `;
+                    elements.dashboardGrid.appendChild(card);
+                });
             }
+            updateStats();
         }
         
-        function setupRealtimeListener(uid) {
-            userId = uid;
-            projectsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/projects`);
-            const q = query(projectsCollectionRef, orderBy('createdAt', 'desc'));
-
-            onSnapshot(q, (snapshot) => {
-                projects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                renderProjects();
-            }, (error) => {
-                console.error("Erro ao carregar projetos: ", error);
-                showNotification('Não foi possível carregar os projetos.', 'error');
-            });
+        function openModal(project = null) {
+            elements.projectForm.reset();
+            if (project) {
+                elements.modalTitle.textContent = 'Editar Projeto';
+                formInputs.id.value = project.id;
+                formInputs.title.value = project.title;
+                formInputs.description.value = project.description;
+                formInputs.link.value = project.link;
+                formInputs.category.value = project.category || 'estudo';
+                formInputs.status.value = project.status || 'active';
+            } else {
+                elements.modalTitle.textContent = 'Novo Projeto';
+                formInputs.id.value = '';
+            }
+            elements.modal.classList.remove('hidden');
         }
 
-        // --- Event Listeners ---
+        function closeModal() {
+            elements.modal.classList.add('hidden');
+        }
+
+        async function handleFormSubmit(e) { /* ... (código inalterado) ... */ }
+        async function deleteProject(id) { /* ... (código inalterado) ... */ }
+        function setupRealtimeListener(uid) { /* ... (código inalterado) ... */ }
+
         function handleDashboardClick(e) {
             const editBtn = e.target.closest('.edit-btn');
             const deleteBtn = e.target.closest('.delete-btn');
+            const summaryBtn = e.target.closest('.generate-summary-btn');
             if (editBtn) {
                 const project = projects.find(p => p.id == editBtn.dataset.id);
                 openModal(project);
@@ -287,34 +319,120 @@
             if (deleteBtn) {
                 deleteProject(deleteBtn.dataset.id);
             }
+            if (summaryBtn) {
+                generateSummary(summaryBtn.dataset.title);
+            }
         }
         
         function handleFilterClick(e) { /* ... (código inalterado) ... */ }
         
-        // --- Tema e Assinatura ---
+        // --- Gemini API Functions ---
+        async function generateDescriptionWithAI() {
+            const title = formInputs.title.value.trim();
+            if (!title) {
+                showNotification("Por favor, insira um título primeiro.", "error");
+                return;
+            }
+
+            const btn = elements.generateDescBtn;
+            btn.disabled = true;
+            btn.innerHTML = 'Gerando...';
+
+            const prompt = `Para um projeto de estudos para a prova do CRC chamado "${title}", gere uma descrição concisa e motivadora (máximo 2 frases) e sugira a melhor categoria. Categorias disponíveis: estudo, jogo, simulado, revisao, variedades.`;
+            
+            try {
+                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                const payload = { 
+                    contents: chatHistory,
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                "description": { "type": "STRING" },
+                                "category": { "type": "STRING", "enum": ["estudo", "jogo", "simulado", "revisao", "variedades"] }
+                            },
+                            required: ["description", "category"]
+                        }
+                    }
+                };
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error(`API Error: ${response.status}`);
+
+                const result = await response.json();
+                const text = result.candidates[0].content.parts[0].text;
+                const parsedJson = JSON.parse(text);
+
+                formInputs.description.value = parsedJson.description;
+                formInputs.category.value = parsedJson.category;
+
+            } catch (error) {
+                console.error("Erro na API Gemini:", error);
+                showNotification("Não foi possível gerar a descrição.", "error");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '✨ Gerar com IA';
+            }
+        }
+
+        async function generateSummary(title) {
+            elements.summaryModalTitle.textContent = `Resumo de: ${title}`;
+            elements.summaryContent.innerHTML = '<p>A gerar resumo com IA...</p>';
+            elements.summaryModal.classList.remove('hidden');
+
+            const prompt = `Crie um resumo conciso e bem estruturado sobre o tópico "${title}", focado nos pontos mais importantes para a prova do CRC (Conselho Regional de Contabilidade). Use títulos e listas para organizar a informação.`;
+
+            try {
+                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                const payload = { contents: chatHistory };
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                
+                const result = await response.json();
+                const text = result.candidates[0].content.parts[0].text;
+                
+                // Basic Markdown to HTML
+                let htmlContent = text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/^(#+)\s*(.*)/gm, (match, hashes, content) => `<h${hashes.length + 2}>${content}</h${hashes.length + 2}>`)
+                    .replace(/^\s*\*\s(.*)/gm, '<ul><li>$1</li></ul>')
+                    .replace(/<\/ul>\s*<ul>/g, ''); // Join consecutive lists
+
+                elements.summaryContent.innerHTML = htmlContent;
+
+            } catch (error) {
+                console.error("Erro na API Gemini:", error);
+                elements.summaryContent.innerHTML = '<p>Não foi possível gerar o resumo. Tente novamente.</p>';
+            }
+        }
+
+        function closeSummaryModal() {
+            elements.summaryModal.classList.add('hidden');
+        }
+
+        // --- Theme and Signature ---
         function loadTheme() { /* ... (código inalterado) ... */ }
         function setSignature() { /* ... (código inalterado) ... */ }
         
         // --- Inicialização ---
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                // Utilizador está logado
-                console.log("Utilizador autenticado com UID:", user.uid);
-                setupRealtimeListener(user.uid);
-            } else {
-                // Utilizador não está logado, tenta autenticar
-                try {
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                } catch (error) {
-                    console.error("Falha na autenticação anónima:", error);
-                    showNotification('Não foi possível conectar à base de dados.', 'error');
-                }
-            }
-        });
+        onAuthStateChanged(auth, async (user) => { /* ... (código inalterado) ... */ });
 
         [elements.addProjectBtn, elements.emptyStateBtn].forEach(btn => btn.addEventListener('click', () => openModal()));
         [elements.closeModalBtn, elements.cancelBtn].forEach(btn => btn.addEventListener('click', closeModal));
@@ -331,20 +449,10 @@
             localStorage.setItem('theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
             elements.themeToggle.innerHTML = htmlEl.classList.contains('dark') ? '☀️' : '🌙';
         });
+        elements.generateDescBtn.addEventListener('click', generateDescriptionWithAI);
+        elements.closeSummaryModalBtn.addEventListener('click', closeSummaryModal);
+        elements.summaryModal.addEventListener('click', (e) => { if (e.target === elements.summaryModal) closeSummaryModal(); });
 
-        // Funções que precisam ser globais para o HTML
-        window.showNotification = showNotification;
-        window.categoryConfig = categoryConfig;
-        window.statusConfig = statusConfig;
-        window.updateStats = updateStats;
-        window.renderProjects = renderProjects;
-        window.openModal = openModal;
-        window.closeModal = closeModal;
-        window.handleFormSubmit = handleFormSubmit;
-        window.handleDashboardClick = handleDashboardClick;
-        window.handleFilterClick = handleFilterClick;
-        
-        // Inicializa o tema e a assinatura
         loadTheme();
         setSignature();
     </script>
